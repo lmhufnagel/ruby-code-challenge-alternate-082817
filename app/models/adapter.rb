@@ -1,37 +1,27 @@
-require 'json'
-
 class Adapter
-  attr_accessor :restaurants
+  attr_accessor :articles
 
-  def self.restaurants
-    json = File.read('yelp.json')
+  def self.articles
+    json = File.read('newyorker.json')
     JSON.parse(json)
   end
 
   def initialize
-    @restaurants = self.class.restaurants
+    self.articles = self.class.articles
+    self.create_objects
   end
 
-  def create_customers
-    self.restaurants.each do |restaurant|
-      restaurant["reviews"].each do |review|
-        Customer.find_or_create_by_name(review["customer"]["first_name"], review["customer"]["last_name"])
-      end
-    end
-  end
+  def create_objects
+    self.articles.each do |article|
+      c_first_name = article["contributor"].split()[0]
+      c_last_name = article["contributor"].split()[1]
+      contributor = Contributor.find_or_create(c_first_name, c_last_name)
 
-  def create_restaurants
-    self.restaurants.each do |restaurant|
-      Restaurant.find_or_create_by_name(restaurant["name"])
-    end
-  end
+      new_article = Article.new(article["title"], article["description"], article["publishedAt"], article["url"], contributor)
 
-  def create_reviews
-    self.restaurants.each do |restaurant|
-      restaurant["reviews"].each do |review|
-        rest = Restaurant.find_or_create_by_name(restaurant["name"])
-        cust = Customer.find_or_create_by_name(review["customer"]["first_name"], review["customer"]["last_name"])
-        Review.new(rest, cust, review["content"])
+      article["category"].split(", ").each do |category|
+        cat = Category.find_or_create_by_name(category)
+        ArticleCategory.find_or_create(new_article, cat)
       end
     end
   end
