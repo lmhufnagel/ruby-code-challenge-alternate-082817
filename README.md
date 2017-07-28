@@ -1,8 +1,11 @@
 # Object Relations Assessment
 
-For this assignment, we're going to be working to help New Yorker Magazine organize its articles and contributors into categories for their new website. An article will belong to a contributor and can have more than one category. Contributor writes for various Categories via his/her articles, and by the same token a Category can host many contributors.
+For this assignment, we're going to be working to help New Yorker Magazine organize its articles and contributors into categories for their new website. 
+- An article will belong to a contributor and a contributor can have many articles
+- An article can have many categories and a category can have many articles. Consider that you may need to include an additional model to make the domain viable.
+- and can have more than one category. Contributor writes for various Categories via his/her articles, and by the same token a Category can host many contributors.
 
-Make sure to draw up the domain model before beginning. Consider that you may need to include more models to make the domain viable.
+Make sure to draw up the domain model before beginning. 
 
 ## Topics
 
@@ -26,9 +29,6 @@ The below are the methods that must be present on your models. Feel free to buil
 2. Build out the Adapter to parse through the data and create the Contributor, Article, and Category objects. Be careful that you don't duplicate instances of any class.
 3. Build methods for the Category class, then complete methods for Contributor and Article.
 
-Adapter:
-- Use the Adapter class to parse through the data in the JSON file and turn it into models.
-- Be careful not to duplicate your instances of each.
 
 Category:
 - Category.find_or_create_by_name
@@ -45,3 +45,8 @@ Contributor:
 Article:
 - Article.find_all_by_category
   + Takes a category and returns all articles associated with it
+  
+BONUS:
+Adapter:
+- If you have time use the code given on the Adapter class to finish the implementation of the #create_objects method.  It should iterate over the files stored in `@articles` and build the associated objects.
+- Be careful not to duplicate your instances of each.
