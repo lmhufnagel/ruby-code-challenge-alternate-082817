@@ -1,9 +1,9 @@
 # Object Relations Assessment
 
 For this assignment, we're going to be working to help New Yorker Magazine organize its articles and contributors into categories for their new website. 
-- An article will belong to a contributor and a contributor can have many articles
-- An article can have many categories and a category can have many articles. This means you will need an ArticleCategories Model that associates the two instances.
-- Contributor writes for various Categories via his/her articles, and by the same token a Category can host many contributors.
+- An article will belong to a contributor and a contributor can have many articles.  This is a has-many relationship.
+- An article can have many categories and a category can have many articles. This means you will need an ArticleCategories Model that associates an instance of the Article class with an instance of the Category class. This is a many-to-many relationship.
+- A contributor should be able to access the categories of his/her articles.
 
 Make sure to draw up the domain model before beginning. 
 
@@ -24,18 +24,23 @@ We've provided you with a console that you can use to test your code. To enter a
 **To Submit** - once you've completed all the deliverables, please copy/paste your three class definitions into the `solution.rb` file. Please don't submit the lab until we give you the signal.
 
 ## Deliverables
-The below are the methods that must be present on your models. Feel free to build out any helper methods to use in these, but complete in the following order:
-1. Build the basic initialization methods on the Contributor, Article and Category classes needed to instantiate objects for each. Look at the given files to see what attributes each class has
-2. Build methods for the Category class, then complete methods for Contributor and Article.
+The below are the methods that must be present on your models. Feel free to build out any helper methods, if needed.
 
+**First:** Build the basic initialization methods on the Contributor, Article, Category, and ArticleCategories classes needed to instantiate objects for each. Look at the newyorker.json file to see what attributes an article will have.  Then begin building out the methods listed below.  You may have to jump around a bit in the order that you build them.
 
 Category:
+- Category#all
+  + Class level method that returns all Category instances. When a category instance is initialized, it should be added to the collection of all Category instances. 
 - Category.find_or_create_by_name(name)
    + If a category  with this name exists, this method returns it. Otherwise, it creates the new category instance
+- Category#articles
+  + Returns an Array of Article instances associated with this category
 - Category.most_articles
   + Returns category with the most articles associated with it
 
 Contributor:
+- Contributor#all
+  + Class level method that returns all Contributor instances. When a contributor instance is initialized, it should be added to the collection of all Contributor instances.
 - Contributor.find_or_create_by_name(name)
   + If a contributor  with this name exists, this method returns it. Otherwise, it creates the new contributor instance
 - Contributor#articles
@@ -44,8 +49,18 @@ Contributor:
   + Returns all categories this contributor has written articles for
 
 Article:
+- Article#all
+  + Class level method that returns all Article instances. When an article instance is initialized, it should be added to the collection of all Article instances.
 - Article.find_all_by_category(category)
-  + Takes a category and returns all articles associated with it
+  + Takes a category instance as an argument, and returns all articles associated with it
+
+ArticleCategories
+- ArticleCategories#all
+  + Class level method that returns all ArticleCategories instances. When an ArticleCategories instance is initialized, it should be added to the collection of all ArticleCategories instances.
+- ArticleCategory#article
+ + Returns the associated article instance
+- ArticleCategory#category
+  + Returns the associated category instance
   
 BONUS:
 Adapter:
