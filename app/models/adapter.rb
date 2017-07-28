@@ -2,8 +2,8 @@ class Adapter
   attr_accessor :articles
 
   def self.read_articles_from_file(file)
-    json = File.read(file)
-    JSON.parse(json)
+    file_string = File.read(file)
+    JSON.parse(file_string)
   end
 
   def initialize(file)
