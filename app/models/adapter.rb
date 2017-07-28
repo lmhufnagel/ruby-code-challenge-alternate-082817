@@ -1,29 +1,18 @@
 class Adapter
   attr_accessor :articles
 
-  def self.articles
-    json = File.read('newyorker.json')
+  def self.read_articles_from_file(file)
+    json = File.read(file)
     JSON.parse(json)
   end
 
-  def initialize
-    self.articles = self.class.articles
+  def initialize(file)
+    @articles = self.class.read_articles_from_file(file)
     self.create_objects
   end
 
   def create_objects
-    self.articles.each do |article|
-      c_first_name = article["contributor"].split()[0]
-      c_last_name = article["contributor"].split()[1]
-      contributor = Contributor.find_or_create(c_first_name, c_last_name)
-
-      new_article = Article.new(article["title"], article["description"], article["publishedAt"], article["url"], contributor)
-
-      article["category"].split(", ").each do |category|
-        cat = Category.find_or_create_by_name(category)
-        ArticleCategory.find_or_create(new_article, cat)
-      end
-    end
+    # your code here...
   end
 
 end
