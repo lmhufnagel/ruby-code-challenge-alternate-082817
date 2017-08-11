@@ -21,7 +21,7 @@ class Article
   
   def self.find_all_by_category(category)
     Article.all.select do |article|
-      article.category.name = category
+      article.category.name == category
     end
   end
 
