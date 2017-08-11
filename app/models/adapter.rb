@@ -1,18 +1,26 @@
-class Adapter
-  attr_accessor :articles
 
-  def self.read_articles_from_file(file)
-    file_string = File.read(file)
-    JSON.parse(file_string)
-  end
+require 'pry'
+require 'json'
+
+# Adapter.new('newyorker.json').create_objects_from_file
+class Adapter
+  attr_accessor :file, :articles
 
   def initialize(file)
-    @articles = self.class.read_articles_from_file(file)
-    self.create_objects
+    @file = file
+    @articles = self.class.articles(file)
   end
 
-  def create_objects
-    # your code here...
+  def self.articles(file)
+    JSON.parse(File.read(file))
+  end
+
+  def create_objects_from_file
+    @articles.each do |article|
+      category = Category.find_or_create(article["category"])
+      Article.new(article, category)
+    end
+    puts "instances created!!"
   end
 
 end

@@ -1,26 +1,20 @@
 class Article
-  attr_accessor :title, :description, :posted_at, :url, :contributor
+  attr_accessor :title, :description, :posted_at, :url, :contributor, :category
+
   @@all = []
 
-  def self.all
-    @@all
-
-  end
-
-  def initialize(title, description, posted_at, url, contributor)
-    @title = title
-    @description = description
-    @posted_at = posted_at
-    @url = url
-    @contributor = contributor
+  def initialize(article, category)
+    @title = article["title"]
+    @description = article["description"]
+    @posted_at = article["publishedAt"]
+    @url = article["url"]
+    @contributor = article["contributor"]
+    @category = category
     self.class.all << self
   end
 
-
-  def self.find_all_by_category(category)
-    art_cats = ArticleCategory.all.select { |art_cat| art_cat.category == category }
-    art_cats.map(&:article)
+  def self.all
+    @@all
   end
-
 
 end
