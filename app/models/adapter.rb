@@ -16,7 +16,7 @@ class Adapter
   end
 
   def create_objects_from_file
-    # create article and category objects here
+    Article.new(article["title"], article["description"], article["url"], article["contributor"], article["publishedAt"], article["category"])
   end
 
 end
